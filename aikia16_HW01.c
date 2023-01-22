@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 
 
@@ -47,11 +48,89 @@ void intro332532(int n){//takes a positive integer as input
     }
 }
 
+// Write the function UABNumber that will ask user to enter an integer and assign this value to a
+// an integer variable n2. Your function will return a Boolean value (True or False). You will
+// consider a number is a UABNumber if the value of the number is equal to the sum of its
+// positive divisors. Your function will consider the input value and return True if the input
+// parameter is a UABNumber, it will return False otherwise. While finding the positive divisors, do
+// not include the number itself and assume n is equal or greater than 0.
+int UABNumber(int n2){
+    int i = 1;
+    int total = 0;
+    for(i = 1; i < n2; i++){
+        if(n2 % i == 0){
+            total+=i;
+        }
+    }
+    if ( n2 == total){
+        printf("True\n");
+        return 1;
+    }
+    else{
+        printf("False\n");
+        return 0;
+    }
+    // return(n2 == total);
+}
 
+// Write the function “reverseNum” that takes an integer n3 and returns another integer. The
+// function will reverse the order of the digits and return the new value. Assume the input will
+// contain the positive integers only
+int reverseNum(int n3){
+    int reverseN3 = 0;
+    char stringN3 = n3;
+    return reverseN3;
+}
+
+// Write the function smallerThanIndex() that takes an array of integers (numbers) and return an
+// integer. The function will check every number’s value and their indices. Count the number of integers in
+// the array whose value is smaller than index and return the total.
+// +10 Bonus points: Use pointers to manipulate the array
+// REFERENCE: https://flaviocopes.com/c-array-length/
+int smallerThanIndex(int nums[], int size){
+    int element;//iteration variable
+    int counter = 0;//Counts the number of integers whose value is smaller than index
+    for(int element = 0; element < size; element++){//loops through the input array
+        if(nums[element] < element){//if the value at index is smaller than the index
+            counter+=1;//Counts the number of integers whose value is smaller than index
+        }
+    }
+    return counter;//returns the number of integers with a value smaller than their perspective index
+}
+
+// Write a function arrayDetails that takes in aan integer array arr and returns another array
+// containing (in the following order) the number of elements in the array, the minimum value, the
+// minimum value’s index, the mean (rounded to the nearest hundredth), the maximum value and the
+// maximum value’s index (total of six elements). Assume that the input will always be an array of
+// integers. Built-in-methods and functions are permitted.
+int arrayDetails(){
+    return 0;
+}
 int main()
 {
+    printf("\nHere are the results from the Intro332532 Function\n");
     intro332532(15);
     intro332532(10);
     intro332532(9);
-    intro332532(89);      
+    intro332532(89);
+
+    printf("\nHere are the results from the UABNumber Function\n");
+    UABNumber(28);
+    UABNumber(12);
+    UABNumber(6);
+    UABNumber(27);
+
+    printf("\nHere are the results from the smallerThanIndex Function\n");    
+    int numbers[5] = {10,20,1,2,30};
+    int size = sizeof(numbers)/sizeof(numbers[0]);
+    printf("%d\n",smallerThanIndex(numbers,size));
+
+    int numbers2[6] = {1,2,0,44,29,309};
+    size = sizeof(numbers2)/sizeof(numbers2[0]);
+    printf("%d\n",smallerThanIndex(numbers2,size));
+
+    int numbers3[5] = {-4,-3,2,1,0};
+    size = sizeof(numbers3)/sizeof(numbers3[0]);
+    printf("%d\n",smallerThanIndex(numbers3,size));
+
 }
