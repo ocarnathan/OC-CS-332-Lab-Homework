@@ -9,8 +9,28 @@
 // Date: January 21, 2023
 
 int insertionSort(int array[], int size){
-    
-
+    int temp, currLoc;
+    int i = 0;
+    for(int i = 0; i < size; i++){
+        currLoc = i;
+        while(currLoc > 0 && array[currLoc-1] > array[currLoc]){
+            temp = array[currLoc];
+            array[currLoc] = array[currLoc-1];
+            array[currLoc-1] = temp;
+            currLoc-=1;
+        }
+    }
+    printf("\nThe sorted array is: ");
+    printf("[");
+    for(i = 0; i < size; i++){
+        if(i == size-1){
+            printf("%d",array[i]);
+        }
+        else{
+            printf("%d, ",array[i]); 
+        }
+    }
+    printf("]\n");
     return 0;
 }
 int main() {
@@ -20,7 +40,7 @@ int main() {
     scanf("%d",&arraySize);
     int i = 0;
     int inputArray[arraySize];
-    //printf("\nPlease enter each of the %d elements of the array (You must click enter after each entry)\n",arraySize);
+
     for(i = 0; i < arraySize; i++){
         printf("\nPlease enter element %d of the array followed by enter\n",i + 1);
         scanf("%d",&inputArray[i]);
@@ -28,7 +48,6 @@ int main() {
     printf("\nThe given array is: ");
     printf("[");
     for(i = 0; i < arraySize; i++){
-        //printf("%d, ",inputArray[i]);
         if(i == arraySize-1){
             printf("%d",inputArray[i]);
         }
@@ -37,5 +56,6 @@ int main() {
         }
     }
     printf("]\n");
+    insertionSort(inputArray,arraySize);
 return 0;
 }

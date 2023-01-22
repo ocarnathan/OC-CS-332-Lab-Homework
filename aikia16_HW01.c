@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
+
+
+// I, Obie Carnathan, declare that I have completed this assignment completely and entirely on my own, without any unathorized consultation from others or unathorized access to online websites. I have read the UAB Academic Honor Code and understand that any breach of the UAB Academic Honor Code may result in severe penalties.
+
+// Student Signature/Initials: OC
+
+// Date: January 22, 2023
 
 
 
@@ -76,11 +84,23 @@ int UABNumber(int n2){
 // Write the function “reverseNum” that takes an integer n3 and returns another integer. The
 // function will reverse the order of the digits and return the new value. Assume the input will
 // contain the positive integers only
-int reverseNum(int n3){
-    int reverseN3 = 0;
-    char stringN3 = n3;
-    return reverseN3;
-}
+// REFERENCE: https://www.tutorialspoint.com/c_standard_library/c_function_sprintf.htm
+
+// int reverseNum(int n3){
+//     char num[25];
+//     sprintf(num, "%d",n3);
+//     int i = 0;
+
+//     while(num[i] != NULL){
+//         i+=1;
+//     }
+//     char* num2[i + 1];
+//     int j = 0;
+//     for(j = 0; j < i; j++){
+//         num2[j] = num[j];
+//     }
+//     return num2;
+// }
 
 // Write the function smallerThanIndex() that takes an array of integers (numbers) and return an
 // integer. The function will check every number’s value and their indices. Count the number of integers in
@@ -98,12 +118,49 @@ int smallerThanIndex(int nums[], int size){
     return counter;//returns the number of integers with a value smaller than their perspective index
 }
 
-// Write a function arrayDetails that takes in aan integer array arr and returns another array
+// Write a function arrayDetails that takes in an integer array arr and returns another array
 // containing (in the following order) the number of elements in the array, the minimum value, the
 // minimum value’s index, the mean (rounded to the nearest hundredth), the maximum value and the
 // maximum value’s index (total of six elements). Assume that the input will always be an array of
 // integers. Built-in-methods and functions are permitted.
-int arrayDetails(){
+int arrayDetails(int array[], int size){
+    double arrayDetails[6];
+    arrayDetails[0] = size;//First element equals size of the input array
+    int minIndex = 0;
+    int minValue = 0;
+    int i = 0;
+    double meanOfArray = 0;
+    for(i = 0; i < size; i++){
+        if(array[i] < array[minIndex]){
+            minIndex = i;
+            arrayDetails[1] = array[minIndex];//Second element equals the minimun value of the input array.
+            arrayDetails[2] = minIndex;//Third element equals the index of the minimun value of the input array.
+        }
+        meanOfArray+=array[i];
+    }
+    meanOfArray = meanOfArray/size;
+    arrayDetails[3] = meanOfArray;//Fourth element equals the mean of the elements in the input array.
+     for(i = 0; i < size; i++){
+        if(array[i] > array[minIndex]){
+            minIndex = i;
+            arrayDetails[4] = array[minIndex];//Fifth element equals the maximum value of the input array.
+            arrayDetails[5] = minIndex;//Sixth element equals the index of the maximum value of the input array.
+        }
+    }
+    printf("[");
+    for(i = 0; i < 6; i++){
+        //printf("%d, ",(int)arrayDetails[i]);
+        if(i == 6-1){
+            printf("%d",(int)arrayDetails[i]);
+        }
+        else if(i == 6-3){
+            printf("%.2f, ",arrayDetails[i]);             
+        }
+        else{
+            printf("%d, ",(int)arrayDetails[i]); 
+        }
+    }
+    printf("]\n");
     return 0;
 }
 int main()
@@ -132,5 +189,32 @@ int main()
     int numbers3[5] = {-4,-3,2,1,0};
     size = sizeof(numbers3)/sizeof(numbers3[0]);
     printf("%d\n",smallerThanIndex(numbers3,size));
-
+// REFERENCE: https://www.youtube.com/watch?v=tdJz1JzqN4A
+    int arraySize = 0;
+    printf("\nPlease enter number of elements in array:\n");
+    scanf("%d",&arraySize);
+    int *array = (int*) malloc(arraySize * sizeof(int));
+    if(array == NULL){
+        puts("failed to allocate memory");
+    }
+    else{
+        int i = 0;
+        for(i = 0; i < arraySize; i++){
+            printf("\nPlease enter element %d of the array followed by enter\n",i + 1);
+            scanf("%d",&array[i]);
+    }
+    printf("\nThe given array is: ");
+    printf("[");
+    for(i = 0; i < arraySize; i++){
+        if(i == arraySize-1){
+            printf("%d",array[i]);
+        }
+        else{
+            printf("%d, ",array[i]); 
+        }
+    }
+    printf("]\n");
+    arrayDetails(array,arraySize);
+    free(array);
+}
 }
