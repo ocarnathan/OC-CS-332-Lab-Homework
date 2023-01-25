@@ -9,15 +9,15 @@
 // Date: January 21, 2023
 
 int insertionSort(int array[], int size){
-    int temp, currLoc;
+    int temp, current;
     int i = 0;
     for(int i = 0; i < size; i++){
-        currLoc = i;
-        while(currLoc > 0 && array[currLoc-1] > array[currLoc]){
-            temp = array[currLoc];
-            array[currLoc] = array[currLoc-1];
-            array[currLoc-1] = temp;
-            currLoc-=1;
+        current = i;
+        while(current > 0 && array[current-1] > array[current]){
+            temp = array[current];
+            array[current] = array[current-1];
+            array[current-1] = temp;
+            current-=1;
         }
     }
     printf("\nThe sorted array is: ");
