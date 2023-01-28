@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 
 // I, Obie Carnathan, declare that I have completed this assignment completely and entirely on my own, without any unathorized consultation from others or unathorized access to online websites. I have read the UAB Academic Honor Code and understand that any breach of the UAB Academic Honor Code may result in severe penalties.
@@ -9,8 +10,27 @@
 // Student Signature/Initials: OC
 
 // Date: January 22, 2023
-
-
+// REFERENCE: https://www.geeksforgeeks.org/time-delay-c/
+void delay(int number_of_seconds)
+{
+    // Converting time into milli_seconds
+    int milli_seconds = 1000 * number_of_seconds;
+ 
+    // Storing start time
+    clock_t start_time = clock();
+ 
+    // looping till required time is not achieved
+    while (clock() < start_time + milli_seconds)
+        ;
+}
+void switchDelay(){
+    int i;
+    for (i = 0; i < 10; i++) {
+        // delay
+        delay(300);
+        printf(".");
+    }    
+}
 
 int checkifPrime(int n){//Takes a positive integer n and tells if it is a prime number or not
     int j = 0;//initializes and declares int j. To be used later as iterative variable in for loop
@@ -54,6 +74,9 @@ void intro332532(int n){//takes a positive integer as input
     else if (checkifPrime(n) && n != 3 && n != 5){
         printf("Go Blazers\n");
     }
+    else {
+        printf("%d\n",n*n*n);
+    }
 }
 
 // Write the function UABNumber that will ask user to enter an integer and assign this value to a
@@ -91,7 +114,7 @@ int reverseNum(int n3){
     // result[50];
   //int num = 1234;
   sprintf(input, "%d", n3);
-  printf("\n You entered: %s", input);
+  printf("\nYou entered: %s", input);
   char result[50];
   int i = 0;
   int j = 49;
@@ -168,60 +191,94 @@ int arrayDetails(int array[], int size){
     printf("]\n");
     return 0;
 }
+void program(){
+    int selection = 1;
+    int arraySize = 0;
+    while(selection > 0 && selection < 7){
+        printf("\nPlease enter the value for the corresponding function that you would like to run:\n");
+        printf("\n(1) Intro332532(User Input)\n(2) UABNumber(User Input)\n(3) reverseNum(User Input)\n(4) smallerthanIndex\n(5) arrayDetails(User Input)\n(6) Run all functions without user input\n");
+        scanf("%d",&selection);
+        switch(selection){
+            case 1:
+                printf("\nIntro332532 Function:\n");
+                int number;
+                printf("\nPlease enter a number:\n");
+                scanf("%d",&number);
+                intro332532(number);
+                switchDelay();
+                break;
+            case 2:
+                //printf("\nHere are the results from the UABNumber Function\n");
+                int n2;
+                printf("\nPlease enter the assumed UAB number:\n");
+                scanf("%d",&n2);
+                UABNumber(n2);
+                switchDelay();
+                break;  
+            case 3:
+                printf("\nreverseNum Function:\n");
+                int number2;
+                printf("\nPlease enter a number:\n");
+                scanf("%d",&number2);
+                reverseNum(number2);
+                switchDelay();
+                break; 
+            case 4:
+                printf("\nHere are the results from the smallerThanIndex Function\n");    
+                int numbers[5] = {10,20,1,2,30};
+                int size = sizeof(numbers)/sizeof(numbers[0]);
+                printf("%d\n",smallerThanIndex(numbers,size));
+
+                int numbers2[6] = {1,2,0,44,29,309};
+                size = sizeof(numbers2)/sizeof(numbers2[0]);
+                printf("%d\n",smallerThanIndex(numbers2,size));
+
+                int numbers3[5] = {-4,-3,2,1,0};
+                size = sizeof(numbers3)/sizeof(numbers3[0]);
+                printf("%d\n",smallerThanIndex(numbers3,size));
+                switchDelay();
+                break;
+            case 5:
+                printf("\nPlease enter number of elements in array:\n");
+                scanf("%d",&arraySize);
+                int *array = (int*) malloc(arraySize * sizeof(int));
+                if(array == NULL){
+                    puts("failed to allocate memory");
+                }
+                else{
+                    int i = 0;
+                    for(i = 0; i < arraySize; i++){
+                        printf("\nPlease enter element %d of the array followed by enter\n",i + 1);
+                        scanf("%d",&array[i]);
+                }
+                printf("\nThe given array is: ");
+                printf("[");
+                for(i = 0; i < arraySize; i++){
+                    if(i == arraySize-1){
+                        printf("%d",array[i]);
+                    }
+                    else{
+                        printf("%d, ",array[i]); 
+                    }
+                }
+                printf("]\n");
+                arrayDetails(array,arraySize);
+                free(array);
+                switchDelay();
+                break;
+            case 6:
+
+                break;
+            default:
+                printf("\nInvalid selection\n");
+
+        }
+    printf("Please restart program...\n");
+    }
+ }
+}
+
 int main()
 {
-    printf("\nHere are the results from the Intro332532 Function\n");
-    intro332532(15);
-    intro332532(10);
-    intro332532(9);
-    intro332532(89);
-
-    printf("\nHere are the results from the UABNumber Function\n");
-    UABNumber(28);
-    UABNumber(12);
-    UABNumber(6);
-    UABNumber(27);
-
-    reverseNum(1234);
-
-    printf("\nHere are the results from the smallerThanIndex Function\n");    
-    int numbers[5] = {10,20,1,2,30};
-    int size = sizeof(numbers)/sizeof(numbers[0]);
-    printf("%d\n",smallerThanIndex(numbers,size));
-
-    int numbers2[6] = {1,2,0,44,29,309};
-    size = sizeof(numbers2)/sizeof(numbers2[0]);
-    printf("%d\n",smallerThanIndex(numbers2,size));
-
-    int numbers3[5] = {-4,-3,2,1,0};
-    size = sizeof(numbers3)/sizeof(numbers3[0]);
-    printf("%d\n",smallerThanIndex(numbers3,size));
-// REFERENCE: https://www.youtube.com/watch?v=tdJz1JzqN4A
-    int arraySize = 0;
-    printf("\nPlease enter number of elements in array:\n");
-    scanf("%d",&arraySize);
-    int *array = (int*) malloc(arraySize * sizeof(int));
-    if(array == NULL){
-        puts("failed to allocate memory");
-    }
-    else{
-        int i = 0;
-        for(i = 0; i < arraySize; i++){
-            printf("\nPlease enter element %d of the array followed by enter\n",i + 1);
-            scanf("%d",&array[i]);
-    }
-    printf("\nThe given array is: ");
-    printf("[");
-    for(i = 0; i < arraySize; i++){
-        if(i == arraySize-1){
-            printf("%d",array[i]);
-        }
-        else{
-            printf("%d, ",array[i]); 
-        }
-    }
-    printf("]\n");
-    arrayDetails(array,arraySize);
-    free(array);
-}
+    program();
 }
