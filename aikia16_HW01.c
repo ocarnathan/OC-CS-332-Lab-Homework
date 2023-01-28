@@ -1,3 +1,4 @@
+/*PLEASE NOTE ALL REFERENCES MENTIONED THROUGHOUT THIS CODE!!*/
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -11,6 +12,7 @@
 
 // Date: January 22, 2023
 // REFERENCE: https://www.geeksforgeeks.org/time-delay-c/
+//THIS FUNCTION BELOW IS NOT MY OWN WORK. THE FUNCTION IS SIMPLY USED TO CREATE A SLIGHT DELAY IN SWITCH CASE MENU DISPLAY. IT DOES NOT INFLUENCE THE LOGIC OF ANY FUNCTIONS IN THE ASSIGNMENT
 void delay(int number_of_seconds)
 {
     // Converting time into milli_seconds
@@ -19,7 +21,7 @@ void delay(int number_of_seconds)
     // Storing start time
     clock_t start_time = clock();
  
-    // looping till required time is not achieved
+    // looping until required time is not achieved
     while (clock() < start_time + milli_seconds)
         ;
 }
@@ -101,7 +103,6 @@ int UABNumber(int n2){
         printf("False\n");
         return 0;
     }
-    // return(n2 == total);
 }
 
 // Write the function “reverseNum” that takes an integer n3 and returns another integer. The
@@ -111,13 +112,10 @@ int UABNumber(int n2){
 // REFERENCE: https://stackoverflow.com/questions/10204471/convert-char-array-to-a-int-number-in-c
 int reverseNum(int n3){
   char input[50] = {0};
-    // result[50];
-  //int num = 1234;
   sprintf(input, "%d", n3);
   printf("\nInput: %s", input);
   char result[50];
   int i = 0;
-  int j = 49;
   int k = 0;
   int o;
     for(i = 49; i >= 0; i--){    
@@ -177,7 +175,6 @@ int arrayDetails(int array[], int size){
     }
     printf("[");
     for(i = 0; i < 6; i++){
-        //printf("%d, ",(int)arrayDetails[i]);
         if(i == 6-1){
             printf("%d",(int)arrayDetails[i]);
         }
@@ -196,7 +193,7 @@ void program(){
     int arraySize = 0;
     while(selection > 0 && selection < 7){
         printf("\nPlease enter the value for the corresponding function that you would like to run:\n");
-        printf("\n(1) Intro332532(User Input)\n(2) UABNumber(User Input)\n(3) reverseNum(User Input)\n(4) smallerthanIndex\n(5) arrayDetails(User Input)\n(6) Run all functions without user input\n");
+        printf("\n(1) Intro332532(User Input)\n(2) UABNumber(User Input)\n(3) reverseNum(User Input)\n(4) smallerthanIndex\n(5) arrayDetails(User Input)\n(6) Run all functions without user input, but with assignment test cases.\n");
         scanf("%d",&selection);
         switch(selection){
             case 1:
@@ -224,17 +221,51 @@ void program(){
                 switchDelay();
                 break; 
             case 4:
-                printf("\nHere are the results from the smallerThanIndex Function\n");    
+                printf("\nHere are the results from the smallerThanIndex Function\n");
+                int i;    
                 int numbers[5] = {10,20,1,2,30};
                 int size = sizeof(numbers)/sizeof(numbers[0]);
+                printf("\nThe given array is: ");
+                printf("[");
+                for(i = 0; i < size; i++){
+                    if(i == size-1){
+                        printf("%d",numbers[i]);
+                    }
+                    else{
+                        printf("%d, ",numbers[i]); 
+                    }
+                }
+                printf("]\n");
                 printf("%d\n",smallerThanIndex(numbers,size));
 
                 int numbers2[6] = {1,2,0,44,29,309};
                 size = sizeof(numbers2)/sizeof(numbers2[0]);
+                printf("\nThe given array is: ");
+                printf("[");
+                for(i = 0; i < size; i++){
+                    if(i == size-1){
+                        printf("%d",numbers2[i]);
+                    }
+                    else{
+                        printf("%d, ",numbers2[i]); 
+                    }
+                }
+                printf("]\n");
                 printf("%d\n",smallerThanIndex(numbers2,size));
 
                 int numbers3[5] = {-4,-3,2,1,0};
                 size = sizeof(numbers3)/sizeof(numbers3[0]);
+                printf("\nThe given array is: ");
+                printf("[");
+                for(i = 0; i < size; i++){
+                    if(i == size-1){
+                        printf("%d",numbers3[i]);
+                    }
+                    else{
+                        printf("%d, ",numbers3[i]); 
+                    }
+                }
+                printf("]\n");
                 printf("%d\n",smallerThanIndex(numbers3,size));
                 switchDelay();
                 break;
@@ -292,8 +323,8 @@ void program(){
                 switchDelay();
 
                 printf("\nreverseNum");
+                reverseNum(29);
                 reverseNum(1234);
-                reverseNum(229);
                 reverseNum(10001);
                 switchDelay();
 
