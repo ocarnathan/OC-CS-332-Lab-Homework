@@ -114,7 +114,7 @@ int reverseNum(int n3){
     // result[50];
   //int num = 1234;
   sprintf(input, "%d", n3);
-  printf("\nYou entered: %s", input);
+  printf("\nInput: %s", input);
   char result[50];
   int i = 0;
   int j = 49;
@@ -127,7 +127,7 @@ int reverseNum(int n3){
       }
     }
   o = atoi(result);
-  printf(" The number in reverse is: %d\n",o);
+  printf("\nOutput: %d\n",o);
 }
 
 // Write the function smallerThanIndex() that takes an array of integers (numbers) and return an
@@ -208,11 +208,11 @@ void program(){
                 switchDelay();
                 break;
             case 2:
-                //printf("\nHere are the results from the UABNumber Function\n");
-                int n2;
+                printf("\nUABNumber Function\n");
+                int number1;
                 printf("\nPlease enter the assumed UAB number:\n");
-                scanf("%d",&n2);
-                UABNumber(n2);
+                scanf("%d",&number1);
+                UABNumber(number1);
                 switchDelay();
                 break;  
             case 3:
@@ -267,7 +267,99 @@ void program(){
                 switchDelay();
                 break;
             case 6:
+                printf("\nintro332532");
+                printf("\nInput: %d\nOutput: ",3);
+                intro332532(3);
+                printf("\nInput: %d\nOutput: ",70);
+                intro332532(70);
+                printf("\nInput: %d\nOutput: ",4);
+                intro332532(4);
+                printf("\nInput: %d\nOutput: ",17);
+                intro332532(17);
+                printf("\nInput: %d\nOutput: ",30);
+                intro332532(30);
+                switchDelay();
 
+                printf("\nUABNumber");
+                printf("\nInput: %d\nOutput: ",28);
+                UABNumber(28);
+                printf("\nInput: %d\nOutput: ",12);
+                UABNumber(12);
+                printf("\nInput: %d\nOutput: ",6);
+                UABNumber(6);
+                printf("\nInput: %d\nOutput: ",27);
+                UABNumber(27);
+                switchDelay();
+
+                printf("\nreverseNum");
+                reverseNum(1234);
+                reverseNum(229);
+                reverseNum(10001);
+                switchDelay();
+
+                printf("\nsmallerThanIndex");
+                int numbers[5] = {10,20,1,2,30};
+                int size = sizeof(numbers)/sizeof(numbers[0]);
+                printf("\nThe given array is: ");
+                printf("[");
+                for(i = 0; i < size; i++){
+                    if(i == size-1){
+                        printf("%d",numbers[i]);
+                    }
+                    else{
+                        printf("%d, ",numbers[i]); 
+                    }
+                }
+                printf("]");
+                printf("\nOutput: %d\n",smallerThanIndex(numbers,size));
+
+                int numbers2[6] = {1,2,0,44,29,309};
+                size = sizeof(numbers2)/sizeof(numbers2[0]);
+                printf("\nThe given array is: ");
+                printf("[");
+                for(i = 0; i < size; i++){
+                    if(i == size-1){
+                        printf("%d",numbers2[i]);
+                    }
+                    else{
+                        printf("%d, ",numbers2[i]); 
+                    }
+                }
+                printf("]");
+                printf("\nOutput: %d\n",smallerThanIndex(numbers2,size));
+
+                int numbers3[5] = {-4,-3,2,1,0};
+                size = sizeof(numbers3)/sizeof(numbers3[0]);
+                printf("\nThe given array is: ");
+                printf("[");
+                for(i = 0; i < size; i++){
+                    if(i == size-1){
+                        printf("%d",numbers3[i]);
+                    }
+                    else{
+                        printf("%d, ",numbers3[i]); 
+                    }
+                }
+                printf("]");
+                printf("\nOutput: %d\n",smallerThanIndex(numbers3,size));
+                switchDelay();
+
+                printf("\narrayDetails");
+                int array2[11] = {-8,-23,18,103,0,1,-4,631,3,-41,5};
+                printf("\nThe given array is: ");
+                printf("[");
+                for(i = 0; i < 11; i++){
+                    if(i == 11-1){
+                        printf("%d",array2[i]);
+                    }
+                    else{
+                        printf("%d, ",array2[i]); 
+                    }
+                }
+                printf("]\n");
+                printf("Output: ");
+                arrayDetails(array2,11);
+                switchDelay();                  
                 break;
             default:
                 printf("\nInvalid selection\n");
