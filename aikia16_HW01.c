@@ -85,22 +85,27 @@ int UABNumber(int n2){
 // function will reverse the order of the digits and return the new value. Assume the input will
 // contain the positive integers only
 // REFERENCE: https://www.tutorialspoint.com/c_standard_library/c_function_sprintf.htm
-
-// int reverseNum(int n3){
-//     char num[25];
-//     sprintf(num, "%d",n3);
-//     int i = 0;
-
-//     while(num[i] != NULL){
-//         i+=1;
-//     }
-//     char* num2[i + 1];
-//     int j = 0;
-//     for(j = 0; j < i; j++){
-//         num2[j] = num[j];
-//     }
-//     return num2;
-// }
+// REFERENCE: https://stackoverflow.com/questions/10204471/convert-char-array-to-a-int-number-in-c
+int reverseNum(int n3){
+  char input[50] = {0};
+    // result[50];
+  //int num = 1234;
+  sprintf(input, "%d", n3);
+  printf("\n You entered: %s", input);
+  char result[50];
+  int i = 0;
+  int j = 49;
+  int k = 0;
+  int o;
+    for(i = 49; i >= 0; i--){    
+      if(input[i] != 0){
+        result[k] = input[i];
+        k+=1;
+      }
+    }
+  o = atoi(result);
+  printf(" The number in reverse is: %d\n",o);
+}
 
 // Write the function smallerThanIndex() that takes an array of integers (numbers) and return an
 // integer. The function will check every number’s value and their indices. Count the number of integers in
@@ -176,6 +181,8 @@ int main()
     UABNumber(12);
     UABNumber(6);
     UABNumber(27);
+
+    reverseNum(1234);
 
     printf("\nHere are the results from the smallerThanIndex Function\n");    
     int numbers[5] = {10,20,1,2,30};
