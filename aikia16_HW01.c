@@ -298,6 +298,7 @@ void program(){
                 switchDelay();
                 break;
             case 6:
+                //Lazy implementation....but it gets the job done.
                 printf("\nintro332532");
                 printf("\nInput: %d\nOutput: ",3);
                 intro332532(3);
