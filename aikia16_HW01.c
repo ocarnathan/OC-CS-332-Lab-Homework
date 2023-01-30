@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 
 // I, Obie Carnathan, declare that I have completed this assignment completely and entirely on my own, without any unathorized consultation from others or unathorized access to online websites. I have read the UAB Academic Honor Code and understand that any breach of the UAB Academic Honor Code may result in severe penalties.
@@ -49,11 +50,11 @@ int checkifPrime(int n){//Takes a positive integer n and tells if it is a prime 
     if(factors < 1 && n > 1)//If the current i value only has two factors.
     {
         //printf("The given number %d, is a prime number. ",n);
-        return 1;
+        return true;
     }
     else {
         //printf("The given number %d, is not a prime number. ",n);
-        return 0;
+        return false;
     }
 }
 // Write the function intro332532 that takes a positive integer n and prints a string according
@@ -97,11 +98,11 @@ int UABNumber(int n2){
     }
     if ( n2 == total){
         printf("True\n");
-        return 1;
+        return true;
     }
     else{
         printf("False\n");
-        return 0;
+        return false;
     }
 }
 
@@ -133,7 +134,7 @@ int reverseNum(int n3){
 // the array whose value is smaller than index and return the total.
 // +10 Bonus points: Use pointers to manipulate the array
 // REFERENCE: https://flaviocopes.com/c-array-length/
-int smallerThanIndex(int nums[], int size){
+int smallerThanIndex(int* nums, int size){
     int element;//iteration variable
     int counter = 0;//Counts the number of integers whose value is smaller than index
     for(int element = 0; element < size; element++){//loops through the input array
@@ -149,8 +150,8 @@ int smallerThanIndex(int nums[], int size){
 // minimum value’s index, the mean (rounded to the nearest hundredth), the maximum value and the
 // maximum value’s index (total of six elements). Assume that the input will always be an array of
 // integers. Built-in-methods and functions are permitted.
-int arrayDetails(int array[], int size){
-    double arrayDetails[6];
+double* arrayDetails(int* array, int size){
+    static double arrayDetails[6];
     arrayDetails[0] = size;//First element equals size of the input array
     int minIndex = 0;
     int minValue = 0;
@@ -186,14 +187,14 @@ int arrayDetails(int array[], int size){
         }
     }
     printf("]\n");
-    return 0;
+    return arrayDetails;
 }
 void program(){
     int selection = 1;
     int arraySize = 0;
     while(selection > 0 && selection < 7){
         printf("\nPlease enter the value for the corresponding function that you would like to run:\n");
-        printf("\n(1) Intro332532(User Input)\n(2) UABNumber(User Input)\n(3) reverseNum(User Input)\n(4) smallerthanIndex\n(5) arrayDetails(User Input)\n(6) Run all functions without user input, but with assignment test cases.\n");
+        printf("\n(1) Intro332532(User Input)\n(2) UABNumber(User Input)\n(3) reverseNum(User Input)\n(4) smallerthanIndex\n(5) arrayDetails(User Input)\n(6) Run all functions without user input, but with test cases from the assignment.\n");
         scanf("%d",&selection);
         switch(selection){
             case 1:
