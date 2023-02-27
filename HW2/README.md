@@ -45,3 +45,13 @@ The starting directory itself has a depth of 0.
 6. The program should support not only each of these options separately but also any 
 combination of these options. For example: -S, -s 1024, -f jpg 1, -S -s 1024, -S -f jpg 2, -s 
 1024 -f jpg 2, -S -s 1024 -f jpg 1, -S -f jpg 2 -s 1024. 
+
+## Compilation instructions:
+    make file is set to compile the program. Once the program has been compiled you must enter ./HW2 to run the program. By default the program will list all files in the current directory.
+
+    You must enter a directory or specific commands to modify the output.
+
+## Testing:
+    Program was tested with all favorable commands and command combinations.
+
+    Program may error out or exit with a segmentation fault if a command it not valid.
