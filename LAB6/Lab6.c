@@ -37,13 +37,6 @@ struct listing getfields(char* line){
 	 containing a duplicate copy of the input string. If the memory 
 	 allocation fails, the function returns NULL.*/
 
-	/*atoi is a function used to convert a string of characters representing
-	 an integer value into an actual integer value. The function is defined
-	 in stdlib.h.*/
-
-	 /*atof is a function in C that is used to convert a string of characters
-	  representing a floating-point value into an actual double value. 
-	  The atof function is defined in the stdlib.h header file in C.*/	
 	return item;
 }
 
@@ -61,7 +54,6 @@ int getLine(FILE *fp, char *line){
     line[i] = '\0';
     return i;
 }
-
 
 int sortByPrice (const void *ptr1, const void *ptr2){
 	//Cast the argument back to the the type we passed in.
@@ -129,7 +121,6 @@ int main(int argc, char* args[]) {
 	}
 	fclose(fptr);
 	
-
 	FILE *fptr2 = fopen("sortedByHostName.csv", "w");
 	if(fptr == NULL){
 		printf("Error opening file sorted.csv\n");
@@ -163,16 +154,8 @@ int main(int argc, char* args[]) {
 		exit (-1);
 	}
 
-
-	for (i = 0; i < count; i++){
-
-		if(strcmp(list_items[i].host_name,"host_name")){
-			continue;
-		}
 	fprintf(fptr3,
 		"id,host_id,host_name,neighbourhood_group,neighbourhood,latitude,longitude,room_type,price,minimum_nights,number_of_reviews,calculated_host_listings_count,availability_365\n");
-		}
-
 
 	// fprintf(fptr3,
 	// 	"%d, %d, %s, %s, %s, %.8f, %.6f, %s, %.0f, %d, %d, %d, %d\n",
