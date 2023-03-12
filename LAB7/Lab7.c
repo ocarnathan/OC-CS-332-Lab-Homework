@@ -31,10 +31,10 @@ int main(int argc, char **argv) {
         char* token = strtok(line, " \n");
 
         while(token != NULL){
-            commands[i] = malloc(sizeof(char) * BUFSIZ);
-            strcpy(commands[i],token);
-            token = strtok(NULL," \n");
-            i++;
+            commands[i] = malloc(sizeof(char) * BUFSIZ);//memory allocation
+            strcpy(commands[i],token);//copys token to the array
+            token = strtok(NULL," \n");//next token
+            i++;//changes position to prevent tokens from being overwritten
         }
         commands[i] = NULL;//setting last index equal to NULL
         time_t startTime = time(NULL);/*4. The parent process will make note of the time the program was 
