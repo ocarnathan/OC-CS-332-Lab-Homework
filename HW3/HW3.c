@@ -9,12 +9,16 @@
  timestamps, and other attributes. The stat system call takes a filename as input, 
  and returns a struct stat object that contains the file's attributes.*/
 #include <time.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <regex.h>
 
 #define MAX_PATH_SIZE 2000
 static long enteredFileSize = 0;
 static long fileInfoSize = 0;
 static int enteredDepth = 0;
 char *substring = "";
+char *command = "";
 
 char *filetype(unsigned char type) {//
 
@@ -38,7 +42,7 @@ typedef void traverseFunctionPointer(char *path, int tabSpaces);//Points to trav
 static bool S_opt = false;
 static bool s_low_opt = false;
 static bool f_opt = false;
-
+static bool e_opt = false;
 
 
 
@@ -117,6 +121,8 @@ void getOpt(int argc, char **argv, char *path, int tabSpaces, traverseFunctionPo
                 f_opt = true;
             case 'e':
                 e_opt = true;
+                command = (optarg);//testing
+                printf("%s\n",command);//checking for command output
                 break;
             default:
                 printf("Error\n");
@@ -125,6 +131,52 @@ void getOpt(int argc, char **argv, char *path, int tabSpaces, traverseFunctionPo
     return TD(path, tabSpaces);
 }
 
+void eFlag(char *command, char *filepath){
+    //printf(" command in eFlag: \n%s\n",command);
+    //exit(0);
+    pid_t pid;
+    int status;
+    int i = 0;
+    char **commandArray = malloc(sizeof(char *) * BUFSIZ);
+    char *temp = strdup(command);//temp needed for tokens
+    char *token;
+
+    while ((token = strsep(&temp, " \n")) != NULL){
+        if(*token != '\0'){
+            commandArray[i] = token;
+            i++;
+        }
+    }
+    int fileIndex = i++;
+    commandArray[fileIndex] = filepath;
+    commandArray[fileIndex+1] = NULL;
+    //exit(0);
+    pid = fork();
+   //exit(0);
+        if (pid == 0) { /* this is child process */
+         //exit(0);
+            execvp(commandArray[0],commandArray);
+            printf("If you see this statement then exec failed ;-(\n");
+            perror("execvp");
+            exit(-1);
+        } else if (pid > 0) { /* this is the parent process */
+            /*printf("Wait for the child process to terminate\n");/*Then the parent process will wait for the child 
+            process to complete and when the child process terminates successfully, the parent process will 
+            capture the time the child process completed (you can again use a timer function to capture the time 
+            when the wait function returns).*/
+            wait(&status); /* wait for the child process to terminate */
+            if (WIFEXITED(status)) { /* child process terminated normally */
+                //printf("Child process exited with status = %d\n", WEXITSTATUS(status));
+            } else { /* child process did not terminate normally */
+                printf("Child process did not terminate normally!\n");
+                /* look at the man page for wait (man 2 wait) to determine
+                how the child process was terminated */
+            }
+        } else { /* we have an error */
+            perror("fork"); /* use perror to print the system error message */
+            exit(EXIT_FAILURE);
+        }
+}
 
 void traverseDirectory(char *path, int tabSpaces) {/*path is the name of the directory to be opened. Tab spaces will increase at every recursive call*/
    struct dirent *dirent;/*Initializes a struct dirent object pointer. 
@@ -166,11 +218,11 @@ void traverseDirectory(char *path, int tabSpaces) {/*path is the name of the dir
         strcat(filePath, "/");//Adds a "/" to the end of the subDirPath name
         strcat(filePath, dirent->d_name);//Adds the dirent file name to the end of subDirPath name
 
-        if(S_opt && !s_low_opt && !f_opt){//if S was entered as an option and nothing else
+        if(S_opt && !s_low_opt && !f_opt && !e_opt){//if S was entered as an option and nothing else
             printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name,fileInfo(filePath)); 
         }
 
-        else if(S_opt && s_low_opt && !f_opt){//if -S and -s was entered as an option
+        else if(S_opt && s_low_opt && !f_opt && !e_opt){//if -S and -s was entered as an option
         //printf("working");
             fileInfoSize = getFileSize(filePath);
             // char *str = NULL;
@@ -188,7 +240,7 @@ void traverseDirectory(char *path, int tabSpaces) {/*path is the name of the dir
             //printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name,str);
 
         }
-        else if(s_low_opt && !S_opt && !f_opt){//if only -s was entered
+        else if(s_low_opt && !S_opt && !f_opt && !e_opt){//if only -s was entered
             //printf("lowercase s");
         //static int enteredFileSize = 0;
         //static int fileInfoSize = 0;
@@ -209,7 +261,7 @@ void traverseDirectory(char *path, int tabSpaces) {/*path is the name of the dir
             //printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name,str);
             
         }
-        else if(f_opt && !S_opt && !s_low_opt){//if only -f was entered 
+        else if(f_opt && !S_opt && !s_low_opt && !e_opt){//if only -f was entered 
             //fileInfoSize = getFileSize(filePath);
             if(strstr(dirent->d_name,substring)){
                 fileInfo(filePath);
@@ -218,7 +270,7 @@ void traverseDirectory(char *path, int tabSpaces) {/*path is the name of the dir
                 }
             }
         }
-        else if(f_opt && s_low_opt && !S_opt ){//if -s and -f entered
+        else if(f_opt && s_low_opt && !S_opt && !e_opt){//if -s and -f entered
             fileInfoSize = getFileSize(filePath);
             if(strstr(dirent->d_name,substring) && fileInfoSize <= enteredFileSize){
                 fileInfo(filePath);
@@ -227,7 +279,7 @@ void traverseDirectory(char *path, int tabSpaces) {/*path is the name of the dir
                 }
             }
         }
-        else if(f_opt && S_opt && !s_low_opt ){//if -S and -f was entered 
+        else if(f_opt && S_opt && !s_low_opt && !e_opt){//if -S and -f was entered 
             //fileInfoSize = getFileSize(filePath);
             if(strstr(dirent->d_name,substring)){
                 fileInfo(filePath);
@@ -236,7 +288,7 @@ void traverseDirectory(char *path, int tabSpaces) {/*path is the name of the dir
                 }
             }
         }
-        else if(f_opt && S_opt && s_low_opt){//if -S and -f  and -s were entered 
+        else if(f_opt && S_opt && s_low_opt && !e_opt){//if -S and -f  and -s were entered 
             fileInfoSize = getFileSize(filePath);
             if(strstr(dirent->d_name,substring) && fileInfoSize <= enteredFileSize){
                 fileInfo(filePath);
@@ -245,10 +297,94 @@ void traverseDirectory(char *path, int tabSpaces) {/*path is the name of the dir
                 }
             }
         }
+        else if(e_opt && !f_opt && !S_opt && !s_low_opt){//e only
+                if(dirent->d_type != DT_DIR){
+                    eFlag(command,filePath);
+                }
+            
+        }
+        else if(e_opt && f_opt && !S_opt && !s_low_opt){//e and f
+            if(strstr(dirent->d_name,substring)){
+                fileInfo(filePath);
+                if(depthCount <= enteredDepth && tabSpaces <= enteredDepth){
+                    printf("%*s[%d] %s %ld bytes\n", 4 * tabSpaces, " ", count, dirent->d_name,fileInfoSize);
+                if(dirent->d_type != DT_DIR){
+                    eFlag(command,filePath);
+                }
+                }
+            }
+            //eFlag(command,filePath);     
+        }
+        else if(e_opt && f_opt && S_opt && !s_low_opt){// e and f and S
 
+            if(strstr(dirent->d_name,substring)){
+                fileInfo(filePath);
+                if(depthCount <= enteredDepth && tabSpaces <= enteredDepth){
+                    printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name,fileInfo(filePath)); 
+                if(dirent->d_type != DT_DIR){
+                    eFlag(command,filePath);
+                }               
+                }
+            }
+            
+        }
+        else if(S_opt && s_low_opt && !f_opt && e_opt){//if -S and -s and -e was entered as an option
+        //printf("working");
+            fileInfoSize = getFileSize(filePath);
+            // char *str = NULL;
+            // char *type = filetype(dirent->d_type);
+            // str = fileInfo(filePath);
+            //printf("current file size:%d Desired file size:%d\n",fileInfoSize, enteredFileSize);
+            if(fileInfoSize <= enteredFileSize){
+                if(dirent->d_type == DT_DIR){
+                    fileInfoSize = 0;
+                }
+                //printf("(%s) %ld is less than %ld\n",filetype(dirent->d_type),fileInfoSize,enteredFileSize);
+                printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name,fileInfo(filePath));
+                if(dirent->d_type != DT_DIR){
+                    eFlag(command,filePath);
+                }   
+            }
+            //printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name,str);
+
+        }
+        else if(e_opt && !f_opt && !S_opt && s_low_opt){//e and s
+            fileInfoSize = getFileSize(filePath);
+            if(fileInfoSize <= enteredFileSize){
+                if(dirent->d_type == DT_DIR){
+                    fileInfoSize = 0;
+                }
+                //printf("(%s) %ld is less than %ld\n",filetype(dirent->d_type),fileInfoSize,enteredFileSize);
+                printf("%*s[%d] %s %ld bytes\n", 4 * tabSpaces, " ", count, dirent->d_name,fileInfoSize);
+                if(dirent->d_type != DT_DIR){
+                    eFlag(command,filePath);
+                }
+                //continue;
+            }
+            
+        }
+        else if(e_opt && !f_opt && S_opt && !s_low_opt){//e and S
+            printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name, filetype(dirent->d_type));
+                if(dirent->d_type != DT_DIR){
+                    eFlag(command,filePath);
+                }
+        }
+        else if(f_opt && S_opt && s_low_opt && e_opt){//if -S and -f  and -s were entered 
+            fileInfoSize = getFileSize(filePath);
+            if(strstr(dirent->d_name,substring) && fileInfoSize <= enteredFileSize){
+                fileInfo(filePath);
+                if(depthCount <= enteredDepth && tabSpaces <= enteredDepth){
+                    printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name,fileInfo(filePath));
+                if(dirent->d_type != DT_DIR){
+                    eFlag(command,filePath);
+                }
+                }
+            }
+        }        
         // Print the formated file.
         else{
             printf("%*s[%d] %s (%s)\n", 4 * tabSpaces, " ", count, dirent->d_name, filetype(dirent->d_type));
+            //eFlag(command,filePath);
         }
         count++; 
 
@@ -281,18 +417,7 @@ int main(int argc, char **argv) {
     //     //exit(-1);
     }
 
-    if (argc == 2) { 
-        getOpt(argc, argv, argv[1], tabSpaces, traverseDirectory);
-        //exit(-1);
-    }
-    // if (argc < 2) { 
-    //     printf ("Usage: %s <dirname>\n", argv[0]); 
-    //     exit(-1);
-    // }
-    // if(argc == 2){
-    // traverseDirectory(argv[1], tabSpaces);
-    // }
-    if(argc > 2){
+    if (argc >= 2) {
         char *search = "-s";
         int i = 0;
         for (i = 1; i < argc; i++){
@@ -300,11 +425,42 @@ int main(int argc, char **argv) {
                  enteredFileSize = atoi(argv[i + 1]);
             }
         }
+        if(strcmp(argv[1],"-S") == 0){ 
+            //printf("here %s\n",*&argv[1]);
+                char *root = "../";
+                getOpt(argc, argv, root, tabSpaces, traverseDirectory);
+        }
+        if(strcmp(argv[1],"-f") == 0){ 
+            //printf("here %s\n",*&argv[1]);
+                char *root = "../";
+                getOpt(argc, argv, root, tabSpaces, traverseDirectory);
+        }
+        if(strcmp(argv[1],"-s") == 0){ 
+            //printf("here %s\n",*&argv[1]);
+                char *root = "../";
+                getOpt(argc, argv, root, tabSpaces, traverseDirectory);
+        }   
+        if(strcmp(argv[1],"-e") == 0){ 
+            //printf("here %s\n",*&argv[1]);
+                char *root = "../";
+                getOpt(argc, argv, root, tabSpaces, traverseDirectory);
+        }       
+        else{        
         getOpt(argc, argv, argv[1], tabSpaces, traverseDirectory);
+        }//exit(-1);
+        
     }
+
+    // if(argc > 2){
+    //     char *search = "-s";
+    //     int i = 0;
+    //     for (i = 1; i < argc; i++){
+    //         if(strstr(argv[i], search) != NULL){
+    //              enteredFileSize = atoi(argv[i + 1]);
+    //         }
+    //     }
+    //     getOpt(argc, argv, argv[1], tabSpaces, traverseDirectory);
+    // }
 
     return 0;
 }
-//Compile line gcc HW2.c -o test
-//Standard input ./test ../
-//Sample input ./test /workspaces/OC-CS-332-Lab-Homework/HW2
