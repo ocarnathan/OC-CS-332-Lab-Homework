@@ -122,7 +122,7 @@ void getOpt(int argc, char **argv, char *path, int tabSpaces, traverseFunctionPo
             case 'e':
                 e_opt = true;
                 command = (optarg);//testing
-                printf("%s\n",command);//checking for command output
+                //printf("%s\n",command);//checking for command output
                 break;
             default:
                 printf("Error\n");
