@@ -1,6 +1,4 @@
-/* Simple program to illustrate the use of fork-exec-wait pattern. 
- * This version uses execvp and command-line arguments to create a new process.
- * To Compile: gcc -Wall forkexecvp.c
+/* To Compile: gcc -Wall forkexecvp.c or simply type make
  * To Run: ./a.out <command> [args]
  */
 #include <stdio.h>
@@ -8,6 +6,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
+
 
 int main(int argc, char **argv) {
     pid_t pid;
@@ -26,6 +26,8 @@ int main(int argc, char **argv) {
 	exit(-1);
     } else if (pid > 0) { /* this is the parent process */
         printf("Wait for the child process to terminate\n");
+            signal(SIGINT, SIG_IGN);
+            signal(SIGTSTP,SIG_IGN);
         wait(&status); /* wait for the child process to terminate */
         if (WIFEXITED(status)) { /* child process terminated normally */
             printf("Child process exited with status = %d\n", WEXITSTATUS(status));
@@ -40,6 +42,7 @@ int main(int argc, char **argv) {
     }
     
     printf("[%ld]: Exiting program .....\n", (long)getpid());
-
+        for(;;)
+        pause();
     return 0;
 }

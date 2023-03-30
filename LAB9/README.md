@@ -28,8 +28,8 @@ Modify the program *forkexecvp.c* (found on GitHub and Canvas) such that when yo
 
 - Be sure to include the independent completition code snippet at the top of your source code.
 
-I, _______, declare that I have completed this assignment completely and entirely on my own, without any unathorized consultation from others or unathorized access to online websites. I have read the UAB Academic Honor Code and understand that any breach of the UAB Academic Honor Code may result in severe penalties.
+I, Obie Carnathan, declare that I have completed this assignment completely and entirely on my own, without any unathorized consultation from others or unathorized access to online websites. I have read the UAB Academic Honor Code and understand that any breach of the UAB Academic Honor Code may result in severe penalties.
 
-Student Signature/Initials: ____________
+Student Signature/Initials: OC
 
-Date: ____________
+Date: 20230328
