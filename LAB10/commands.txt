@@ -1,0 +1,4 @@
+uname -adqasa
+/sbin/ifconfig
+/workspaces/OC-CS-332-Lab-Homework/LAB7/Lab-Files/Lab-Files/hw1 500
+/workspaces/OC-CS-332-Lab-Homework/LAB7/Lab-Files/Lab-Files/hw1 1000

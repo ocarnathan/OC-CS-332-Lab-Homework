@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
 	char name[BUFSIZ];
 
 	printf("Please enter your name: ");
-	scanf("%s", name);
+	scanf("%s", name);//When using < filename.txt as a terminal entry. This scanf function will take input from the given txt file
 	printf("[stdout]: Hello %s!\n", name);
 	fprintf(stderr, "[stderr]: Hello %s!\n", name);
 

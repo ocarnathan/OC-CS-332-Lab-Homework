@@ -41,11 +41,9 @@ int main(int argc, char **argv) {
     pid = fork();
     if (pid == 0) { /* this is child process */
         /* replace standard input stream with the file stdin.txt */
-        dup2(fdin, 0);
-
+        dup2(fdin, 0); 
         /* replace standard output stream with the file stdout.txt */
         dup2(fdout, 1);
-
         execvp(argv[1], &argv[1]);
         /* since stdout is written to stdout.txt and not the terminal,
            we should write to stderr in case exec fails, we use perror
