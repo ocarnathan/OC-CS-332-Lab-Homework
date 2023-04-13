@@ -13,6 +13,8 @@
         "tuple": "c",
         "type_traits": "c",
         "utility": "c",
-        "unistd.h": "c"
+        "unistd.h": "c",
+        "string_view": "c",
+        "initializer_list": "c"
     }
 }
